@@ -4,18 +4,17 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<!--<script type="text/javascript" src="../jquery.js"></script>-->
-		<script type="text/javascript" src="../js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="../js/jquery-ui-1.8.17.custom.min.js"></script>
-		<script type="text/javascript" src="navi.js"></script>
-		<link type="text/css" href="../css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+		<script type="text/javascript" src="<?php echo URL ?>js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="<?php echo URL ?>js/jquery-ui-1.8.17.custom.min.js"></script>
+		<script type="text/javascript" src="<?php echo URL ?>public/js/navi.js"></script>
+		<link type="text/css" href="<?php echo URL ?>css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 		<script type="text/javascript">
 					$(function() {
-						$.get('../mvc/index.php');
 						function validate(info){
 							console.log(info);
             $.ajax({
             type:'POST',
-            url:'../mvc/login/run',
+            url:'<?php echo URL ?>login/run',
             data: info,
             success: function(data){
             	console.log(data);
@@ -95,10 +94,10 @@
     });
 });
 </script>
-		<link rel="stylesheet" type="text/css" href="navi.css"/>
+		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>/public/css/navi.css"/>
 		<style>
 			body {
-				background-image: url('black.jpg');
+				background-image: url('<?php echo URL ?>/public/imgs/black.jpg');
 				width: 99%;
 				height: 100%;
 			}
