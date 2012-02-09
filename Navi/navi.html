@@ -9,67 +9,91 @@
 		<script type="text/javascript" src="navi.js"></script>
 		<link type="text/css" href="../css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 		<script type="text/javascript">
-		$(function() {
-			function setPageHandler(div){
-				div.each(function(){
-					console.log($(this));
-					$(this).click(function(){
-						var name = $(this).attr('id');
-					$('#contentBody').hide("blind", 1000, function(){
-						$('#contentBody').empty();
-						$('#contentBody').append('<p>'+name+'</p>');
-				});
-				$('#contentBody').show("blind",1000);
-			});		
-				}); 
-			}
-			setPageHandler($('#navi > li > a'));
-		function enableNavi(){
-			 $('#navi a').stop().animate({'marginLeft':'-85px'},1000);
-		$('#navi > li > a').hover(
-		function () {
-		$('a',$(this).parent()).stop().animate({'marginLeft':'-2px'},200);
-		},
-		function () {
-		$('a',$(this).parent()).stop().animate({'marginLeft':'-85px'},200);
-		});
-		}
-		function disableNavi(){
-			 $('#navi a').stop().animate();
-		$('#navi > li > a').hover(
-		function () {
-		$('a',$(this).parent()).stop().animate();
-		},
-		function () {
-		$('a',$(this).parent()).stop().animate();
-		});
-		}
-		$('#loginD').dialog({
-		autoOpen : false,
-		width : 360,
-		modal : true,
-		buttons : {
-		"Login" : function() {
-		$(this).dialog("submit");
-		
-		enableNavi();
-		},
-		"Register" : function() {
-		$(this).dialog("close");
-		enableNavi();
-		},
-		"Cancel" : function() {
-		$(this).dialog("close");
-		enableNavi();
-		}
-		}
-		});
-		$('#login').click(function() {
-		$('#loginD').dialog('open');
-		disableNavi();
-		return false;
-		});
-		});</script>
+					$(function() {
+						function validate(info){
+							console.log(info);
+            $.ajax({
+            type:'POST',
+            url:'/GameStalker/mvc/login/run',
+            data: info,
+            success: function(data){
+            	console.log(data);
+            }
+            });
+            
+           }
+
+    function setPageHandler(div) {
+        div.each(function() {
+            console.log($(this));
+            $(this).click(function() {
+                var name = $(this).attr('id');
+                $('#contentBody').hide("blind", 1000, function() {
+                    $('#contentBody').empty();
+                    $('#contentBody').append('<p>' + name + '</p>');
+                });
+                $('#contentBody').show("blind", 1000);
+            });
+        });
+    }
+    setPageHandler($('#navi > li > a'));
+
+    function enableNavi() {
+        $('#navi a').stop().animate({
+            'marginLeft': '-85px'
+        }, 1000);
+        $('#navi > li > a').hover(
+
+        function() {
+            $('a', $(this).parent()).stop().animate({
+                'marginLeft': '-2px'
+            }, 200);
+        }, function() {
+            $('a', $(this).parent()).stop().animate({
+                'marginLeft': '-85px'
+            }, 200);
+        });
+    }
+
+    function disableNavi() {
+        $('#navi a').stop().animate();
+        $('#navi > li > a').hover(
+
+        function() {
+            $('a', $(this).parent()).stop().animate();
+        }, function() {
+            $('a', $(this).parent()).stop().animate();
+        });
+    }
+    $('#loginD').dialog({
+        autoOpen: false,
+        width: 360,
+        modal: true,
+        buttons: {
+            "Login": function() {
+                	var username = $('[name=username]').val();
+                	var password = $('[name=password]').val();
+                	var infobj=[username,password];
+                	validate(infobj);
+                enableNavi();
+            },
+            "Register": function() {
+                $(this).dialog("close");
+                enableNavi();
+            },
+            "Cancel": function() {
+                $(this).dialog("close");
+                enableNavi();
+            }
+        }
+    });
+    $('#login').click(function() {
+        $('#loginD').dialog('open');
+        disableNavi();
+        return false;
+    });
+});
+</script>
 		<link rel="stylesheet" type="text/css" href="navi.css"/>
 		<style>
 			body {
@@ -168,7 +192,6 @@
 			</li>
 		</ul>
 		<div id="loginD" >
-			<form action="http://localhost/mvc/login/run" method="post">
 			<table>
 				<tr>
 					<td>Username: </td>
@@ -183,7 +206,6 @@
 					</td>
 				</tr>
 			</table>
-			</form>
 		</div>
 		<div id="contentBody" style="color:white">
 			<div class="content-con" id="avatar">AVATAR</div>

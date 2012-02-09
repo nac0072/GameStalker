@@ -45,10 +45,10 @@ ul#navi .psn a      {
 }
 ul#navi .steam a      {
 	background-color: #1F1F1F;
-    background-image: url(steam.png);
+    background-image: url(Steam.png);
     background-size: 70px 70px;
 }
 ul#navi .login a      {
-    background-image: url(login.png);
+    background-image: url(Login.png);
     background-position:right; 
 }
