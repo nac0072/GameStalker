@@ -8,7 +8,6 @@ class View {
 	public function render($name, $noInclude = false)
 	{
 			require 'views/header.php';
-			require 'views/footer.php';	
 
 	}
 

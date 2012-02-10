@@ -7,20 +7,28 @@
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-ui-1.8.17.custom.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>public/js/navi.js"></script>
+		<script type="text/javascript" src="<?php echo URL ?>public/js/json2.js"></script>
 		<link type="text/css" href="<?php echo URL ?>css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 		<script type="text/javascript">
 					$(function() {
 						function validate(info){
-							console.log(info);
             $.ajax({
             type:'POST',
             url:'login/run',
-            data: info,
+            data: $.param(info),
             success: function(data){
-            	console.log(data);
+            	if(data != ""){
+            		$('#loginD').dialog("close");
+            		$('#ux').hide();
+            		$('#px').hide();
+            	}
+            	else{
+            		$('#ux').show("explode",50);
+            		$('#px').show("explode",50);
+            		$('#loginD').effect("shake", {times : 3}, 100);
+            	}
             }
             });
-            
            }
 
     function setPageHandler(div) {
@@ -28,11 +36,11 @@
             console.log($(this));
             $(this).click(function() {
                 var name = $(this).attr('id');
-                $('#contentBody').hide("blind", 1000, function() {
+                $('#contentBody').hide("clip",{direction: "vertical"}, 1000, function() {
                     $('#contentBody').empty();
                     $('#contentBody').append('<p>' + name + '</p>');
                 });
-                $('#contentBody').show("blind", 1000);
+                $('#contentBody').show("clip",{direction: "vertical"}, 1000);
             });
         });
     }
@@ -71,21 +79,22 @@
         modal: true,
         buttons: {
             "Login": function() {
-                	var username = $('[name=username]').val();
-                	var password = $('[name=password]').val();
-                	var infobj=[username,password];
-                	validate(infobj);
-                enableNavi();
+            	var obj = {};
+            	obj.username = $('[name=username]').val();
+            	obj.password = $('[name=password]').val();
+					validate(obj);       	
             },
             "Register": function() {
                 $(this).dialog("close");
-                enableNavi();
             },
             "Cancel": function() {
                 $(this).dialog("close");
-                enableNavi();
             }
-        }
+        },
+       close: function(e,u){
+       	enableNavi();
+       },
+       
     });
     $('#login').click(function() {
         $('#loginD').dialog('open');
@@ -188,6 +197,13 @@ ul#navi .login a      {
 				height:200px;
 				
 			}
+			.ximg{
+				width:12px;
+				height:12px;
+			}
+			.ui-dialog .ui-dialog-content{
+				padding:.5em;
+			}
 
 		</style>
 	</head>
@@ -222,12 +238,14 @@ ul#navi .login a      {
 					<td>
 					<input type="text" name="username" />
 					</td>
+					<td class="ximg" id="ux" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Password: </td>
 					<td>
 					<input type="password" name="password"/>
 					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 			</table>
 		</div>

@@ -9,7 +9,6 @@ class Login_Model extends Model
 
 	public function run()
 	{
-		
 		$sth = $this->db->prepare("SELECT UserId FROM user WHERE 
 				UserName = :username AND Password = :password");
 		$sth->execute(array(
@@ -25,8 +24,8 @@ class Login_Model extends Model
 			Session::init();
 			Session::set('id', $data['UserId']);
 			Session::set('loggedIn', true);
+			echo $data['UserId'];
 		} 
-		print_r($_POST['username']);
 	}
 	
 }
