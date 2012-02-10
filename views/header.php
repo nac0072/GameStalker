@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<!--<script type="text/javascript" src="../jquery.js"></script>-->
+		<script type="text/javascript" src="<?php echo URL ?>jquery.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-ui-1.8.17.custom.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>public/js/navi.js"></script>
@@ -14,7 +14,7 @@
 							console.log(info);
             $.ajax({
             type:'POST',
-            url:'<?php echo URL ?>login/run',
+            url:'login/run',
             data: info,
             success: function(data){
             	console.log(data);
@@ -96,6 +96,29 @@
 </script>
 		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>/public/css/navi.css"/>
 		<style>
+		ul#navi .home a{
+    background-image: url(<?php echo URL ?>public/imgs/home.png);
+    background-size: 50px 50px;
+}
+ul#navi .xbox a      {
+	background-color: #008000;
+    background-image: url(<?php echo URL ?>public/imgs/xbox.png);
+    background-size: 50px 50px;
+}
+ul#navi .psn a      {
+	background-color: #551A8B;
+    background-image: url(<?php echo URL ?>public/imgs/psn.png);
+    background-size: 90px 50px;
+}
+ul#navi .steam a      {
+	background-color: #1F1F1F;
+    background-image: url(<?php echo URL ?>public/imgs/Steam.png);
+    background-size: 70px 70px;
+}
+ul#navi .login a      {
+    background-image: url(<?php echo URL ?>public/imgs/Login.png);
+    background-position:right; 
+}
 			body {
 				background-image: url('<?php echo URL ?>/public/imgs/black.jpg');
 				width: 99%;
@@ -168,6 +191,7 @@
 
 		</style>
 	</head>
+	<?php Session::init(); ?>
 	<body>
 		<div id="banner">
 			<p>

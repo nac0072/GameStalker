@@ -26,8 +26,7 @@ class Login_Model extends Model
 			Session::set('id', $data['UserId']);
 			Session::set('loggedIn', true);
 		} 
-		echo "IT WORKED";
-		
+		print_r($_POST['username']);
 	}
 	
 }
