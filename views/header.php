@@ -2,6 +2,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
+		<title>Game Stalker</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<script type="text/javascript" src="<?php echo URL ?>jquery.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-1.7.1.min.js"></script>
@@ -17,6 +18,7 @@
             url:'login/run',
             data: $.param(info),
             success: function(data){
+            	console.log(data);
             	if(data != ""){
             		$('#loginD').dialog("close");
             		$('#ux').hide();

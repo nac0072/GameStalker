@@ -30,25 +30,25 @@ ul#navi li a {
     -webkit-box-shadow: 0px 4px 3px #000;
 }
 ul#navi .home a{
-    background-image: url(../imgs/home.png);
+    background-image: url(public/imgs/home.png);
     background-size: 50px 50px;
 }
 ul#navi .xbox a      {
 	background-color: #008000;
-    background-image: url(../imgs/xbox.png);
+    background-image: url(public/imgs/xbox.png);
     background-size: 50px 50px;
 }
 ul#navi .psn a      {
 	background-color: #551A8B;
-    background-image: url(../imgs/psn.png);
+    background-image: url(public/imgs/psn.png);
     background-size: 90px 50px;
 }
 ul#navi .steam a      {
 	background-color: #1F1F1F;
-    background-image: url(../imgs/Steam.png);
+    background-image: url(public/imgs/Steam.png);
     background-size: 70px 70px;
 }
 ul#navi .login a      {
-    background-image: url(../imgs/Login.png);
+    background-image: url(public/imgs/Login.png);
     background-position:right; 
 }
