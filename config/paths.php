@@ -2,7 +2,7 @@
 
 // Always provide a TRAILING SLASH (/) AFTER A PATH
 
-define('URL', 'http://localhost/GameStalker/');
+define('URL', 'http://gamestalker.dyndns.org/');
 
 
 define('LIBS', 'libs/');

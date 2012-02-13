@@ -8,11 +8,35 @@
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-1.7.1.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>js/jquery-ui-1.8.17.custom.min.js"></script>
 		<script type="text/javascript" src="<?php echo URL ?>public/js/navi.js"></script>
-		<script type="text/javascript" src="<?php echo URL ?>public/js/json2.js"></script>
+		<script type="text/javascript" src="<?php echo URL ?>public/js/plugins/isotope/isotope.js"></script>
+		<script type="text/javascript" src="<?php echo URL ?>public/js/plugins/isotope/centeredMasonry.js"></script>
 		<link type="text/css" href="<?php echo URL ?>css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
+		<link type="text/css" href="<?php echo URL ?>public/css/isotope/isotope.css" rel="stylesheet" />
 		<script type="text/javascript">
-					$(function() {
-						function validate(info){
+					$(function() {	
+		var $container = $('#isoParent');
+						$container.isotope({
+							itemSelector : '.item',
+							layoutMode: 'masonry',
+							masonry:{
+								columnWidth: 60,
+								gutterWidth:10,
+							},
+							filter: '.main'
+						},ranLay());
+			function getthird(){
+				console.log($('#CB').width());
+				return Math.floor($('#CB').width()/3.08);
+			}
+			function addPlats(){
+				$('.logout').click(function(){
+					$container.isotope({filter:'.main'},ranLay());
+					//AJAX to kill session
+				});
+				$container.isotope({filter:'.home'},ranLay());	
+			}
+			
+			function validate(info){
             $.ajax({
             type:'POST',
             url:'login/run',
@@ -23,6 +47,7 @@
             		$('#loginD').dialog("close");
             		$('#ux').hide();
             		$('#px').hide();
+            		addPlats();
             	}
             	else{
             		$('#ux').show("explode",50);
@@ -32,6 +57,36 @@
             }
             });
            }
+           function ranLay(){
+          $container.isotope({sortBy: 'random'});
+          }
+          function growglow(){
+           $.each($('.contentBox'),function(){
+           var w = $(this).width();
+           	var h = $(this).height();
+            $(this).hover(
+           	function(){
+           	$(this).css('cursor', 'pointer');
+           	//make this with animate
+           	$(this).stop(true,true).animate({
+           		width: '+=5',
+           		height: '+=5'
+           	}, 200);
+           	var color = $(this).css('color');
+           	$(this).css("text-shadow", "0px 0px 15px " + color);
+           	},
+           	function(){
+           		$(this).stop(true,true).animate({
+           		width: '-=5',
+           		height: '-=5'
+           	},200);
+           	$(this).css("text-shadow","");	
+           	}
+           	);
+           	});
+           }
+	growglow()
+           
 
     function setPageHandler(div) {
         div.each(function() {
@@ -86,9 +141,6 @@
             	obj.password = $('[name=password]').val();
 					validate(obj);       	
             },
-            "Register": function() {
-                $(this).dialog("close");
-            },
             "Cancel": function() {
                 $(this).dialog("close");
             }
@@ -98,33 +150,48 @@
        },
        
     });
-    $('#login').click(function() {
+    $('.login').click(function() {
         $('#loginD').dialog('open');
         disableNavi();
         return false;
+    });
+    $('#rand').click(function(){
+    	console.log("HERE");
+    	$container.isotope({sortBy: 'random'});
+    	 return false;
     });
 });
 </script>
 		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>/public/css/navi.css"/>
 		<style>
-		ul#navi .home a{
+		html,body {
+  height: 100%;
+}
+ul#navi .home a{
     background-image: url(<?php echo URL ?>public/imgs/home.png);
     background-size: 50px 50px;
+    
 }
-ul#navi .xbox a      {
+#xbox{
 	background-color: #008000;
     background-image: url(<?php echo URL ?>public/imgs/xbox.png);
     background-size: 50px 50px;
+    background-repeat:no-repeat;
+    background-position:center; 
 }
-ul#navi .psn a      {
+#psn{
 	background-color: #551A8B;
     background-image: url(<?php echo URL ?>public/imgs/psn.png);
     background-size: 90px 50px;
+    background-repeat:no-repeat;
+    background-position:center; 
 }
-ul#navi .steam a      {
+#steam{
 	background-color: #1F1F1F;
     background-image: url(<?php echo URL ?>public/imgs/Steam.png);
+    background-repeat:no-repeat;
     background-size: 70px 70px;
+    background-position:center; 
 }
 ul#navi .login a      {
     background-image: url(<?php echo URL ?>public/imgs/Login.png);
@@ -135,31 +202,31 @@ ul#navi .login a      {
 				width: 99%;
 				height: 100%;
 			}
-			#banner {
-				width: 99%;
-				height: 90px;
-				top: 3px;
-				background-color: gray;
-				border-radius: 10px;
+			.topleftbar{
+				left: 15px;
+    			position: absolute;
+    			top: 20px;
+    			z-index: 3;
 			}
-			#banner p {
+			.toprightbar{
+				float: right;
+    			left: 5px;
+   			 	position: relative;
+    			top: 55px;
+				
+			}
+			#banner{
 				text-align: center;
 				font-family: georgia, serif;
-				color: #FFFFFF;
+				color: white;
 				font-size: 20px;
 				margin: 10px;
 				padding: 10px;
 				top: 40px;
 			}
-			#contentBody {
-				position: absolute;
-				border-radius: 20px;
+			#isoParent {
+				margin:0 auto;
 				border: 2px solid #4E4E4E;
-				left: 25px;
-				top: 108px;
-				width: 97%;
-				height: 550px;
-				background-color: #3a3a3a;
 			}
 			.ui-dialog .ui-dialog-titlebar {
 				padding: 0em;
@@ -176,26 +243,22 @@ ul#navi .login a      {
 				border-radius:5px;
 				float:left;
 				padding: 5px;
-				margin: 20px;
+				margin: 10px;
 			}
 			#avatar{
-				width:20%;
+				width:200px;
 				height:200px;
-				margin-left:30px;
 			}
 			#feed{
-				width:71%;
+				width:500px;
 				height:250px;
-				float:right;
 							}
 			#friends{
-				margin-left:30px;
-				width:20%;
-				height:250px;
+				width:200px;
+				height:300px;
 			}
 			#games{
-				float:right;
-				width: 71%;
+				width: 500px;
 				height:200px;
 				
 			}
@@ -206,17 +269,85 @@ ul#navi .login a      {
 			.ui-dialog .ui-dialog-content{
 				padding:.5em;
 			}
-
+			.topbar{
+				background-color:#777777;
+			}
+			.contentBox{
+				border:2px solid white;
+				border-radius:10px;
+				box-shadow: 10px 10px 5px #333;
+				background-color:#555555;
+				margin: 10px;
+			}
+			.login{
+				width:200px;
+				height:100px;
+				background-color:#808080;
+				color:white;
+			}
+			.login p{
+				font-size:31px;
+				text-align:center;
+				font-family:Verdana, Tahoma, Geneva, sans-serif;
+				text-decoration:none;
+			}
+			.reg{
+				width:200px;
+				height:100px;
+				background-color:#555555;
+				color:white;
+			}
+			.reg p{
+				font-size:31px;
+				text-align:center;
+				font-family:Verdana, Tahoma, Geneva, sans-serif;
+				text-decoration:none;
+			}
+			.about{
+				width:200px;
+				height:100px;
+				background-color:white;
+				color:black;
+				border:2px solid black;
+			}
+			.about p{ 
+				font-size:31px;
+				text-align:center;
+				font-family:Verdana, Tahoma, Geneva, sans-serif;
+				text-decoration:none;
+				
+			}
+			.logout{
+				width:200px;
+				height:100px;
+				background-color:#808080;
+				color:white;
+			}
+			.logout p{
+				font-size:31px;
+				text-align:center;
+				font-family:Verdana, Tahoma, Geneva, sans-serif;
+				text-decoration:none;
+			}
+		/* selectors for filtering*/
+			.main .home{}
 		</style>
 	</head>
 	<?php Session::init(); ?>
 	<body>
 		<div id="banner">
-			<p>
-				Game Stalker
-			</p>
+			GameStalker
 		</div>
-		<ul id="navi">
+			<div id="isoParent" style="padding:10px">
+			<div  class="contentBox login item main"><p>Login</p></div>
+			<div  class="contentBox logout item home" ><p>LogOut</p></div>
+			<div  class="contentBox reg item main"><p>Register</p></div>
+			<div  class="contentBox about item main home"><p>About</p></div>
+			<div id="xbox" style="width:100px;height:100px" class="item contentBox home"></div>
+			<div id="psn" style="width:100px;height:100px" class="item contentBox home"></div>
+			<div id="steam" style="width:100px;height:100px" class="item contentBox home"></div>
+			</div>
+		<!--<ul id="navi">
 			<li class="home">
 				<a id="home"></a>
 			</li>
@@ -232,7 +363,7 @@ ul#navi .login a      {
 			<li class="login">
 				<a id="login" ></a>
 			</li>
-		</ul>
+		</ul>-->
 		<div id="loginD" >
 			<table>
 				<tr>
@@ -251,11 +382,13 @@ ul#navi .login a      {
 				</tr>
 			</table>
 		</div>
-		<div id="contentBody" style="color:white">
-			<div class="content-con" id="avatar">AVATAR</div>
-			<div class="content-con" id="feed">FEED</div>
-			<div class="content-con" id="friends">FREINDS</div>
-			<div class="content-con" id="games">GAMES</div>
+		<!--<div style="color:white" id="contentBody" >
+			<div id="cB" style=";margin: 0px auto;">
+			<div class="content-con item" id="avatar"></div>
+			<div class="content-con item" id="friends"></div>
+			<div class="content-con item" id="feed"></div>
+			<div class="content-con item" id="games"></div>
+			</div>-->
 			
 		</div>
 	</body>
