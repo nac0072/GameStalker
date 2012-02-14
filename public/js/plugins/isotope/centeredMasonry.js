@@ -6,6 +6,8 @@
     if(parentWidth >= 1000){
     	parentWidth = 1000;
     }
+    console.log(parentWidth);
+    $('#banner').width(parentWidth-100);
                   // i.e. options.masonry && options.masonry.columnWidth
     var colW = this.options.masonry && this.options.masonry.columnWidth ||
                   // or use the size of the first item
