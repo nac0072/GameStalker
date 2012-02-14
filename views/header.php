@@ -13,6 +13,8 @@
 		<link type="text/css" href="<?php echo URL ?>css/dark-hive/jquery-ui-1.8.17.custom.css" rel="stylesheet" />
 		<link type="text/css" href="<?php echo URL ?>public/css/isotope/isotope.css" rel="stylesheet" />
 		<script type="text/javascript">
+		// needs to seperate jquery ui and isotope, and make them work with $.noconfict(function(){})
+		
 					$(function() {	
 		var $container = $('#isoParent');
 						$container.isotope({
@@ -29,9 +31,12 @@
 				return Math.floor($('#CB').width()/3.08);
 			}
 			function addPlats(){
+				$('.login').hide();
+				
 				$('.logout').click(function(){
 					$container.isotope({filter:'.main'},ranLay());
 					//AJAX to kill session
+					$('.login').show();
 				});
 				$container.isotope({filter:'.home'},ranLay());	
 			}
@@ -85,7 +90,7 @@
            	);
            	});
            }
-	growglow()
+	growglow();
            
 
     function setPageHandler(div) {
@@ -134,8 +139,9 @@
         autoOpen: false,
         width: 360,
         modal: true,
+        resizable: false,
         buttons: {
-            "Login": function() {
+            "Login1": function() {
             	var obj = {};
             	obj.username = $('[name=username]').val();
             	obj.password = $('[name=password]').val();
@@ -165,7 +171,8 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>/public/css/navi.css"/>
 		<style>
 		html,body {
-  height: 100%;
+  height: 98;
+  overflow-x:hidden;
 }
 ul#navi .home a{
     background-image: url(<?php echo URL ?>public/imgs/home.png);
@@ -220,9 +227,10 @@ ul#navi .login a      {
 				font-family: georgia, serif;
 				color: white;
 				font-size: 20px;
-				margin: 10px;
+				margin: 0 auto 10px;
 				padding: 10px;
 				top: 40px;
+				width:500px;
 			}
 			#isoParent {
 				margin:0 auto;
@@ -280,16 +288,58 @@ ul#navi .login a      {
 				margin: 10px;
 			}
 			.login{
-				width:200px;
-				height:100px;
-				background-color:#808080;
+				/* for W3C-compliant browsers 
+background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(69,70,69,255) 61%, rgba(14,14,14,255) 100%);
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(125,126,125,255)), color-stop(0.6098097, rgba(69,70,69,255)), color-stop(1, rgba(14,14,14,255)));
+background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(69,70,69,255) 61%, rgba(14,14,14,255) 100%);
+background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(69,70,69,255) 61%, rgba(14,14,14,255) 100%);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#454645'endColorstr='#0e0e0e');*/
+	padding:2px;
+				width:60px;
+				height:40px;
 				color:white;
+				font-size:15px;
+				float:right;
+			}
+			.toolEle{
+				top:-10px;
+				position:relative;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+			}
+			div.toolEle:hover{
+				cursor:pointer;
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(125,126,125,255)), color-stop(0.6098097, rgba(89,89,89,255)), color-stop(1, rgba(53,53,53,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#595959'endColorstr='#353535');
+			}
+			div.toolElem:active{
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(125,126,125,255)), color-stop(0.6098097, rgba(117,117,117,255)), color-stop(1, rgba(109,109,109,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#757575'endColorstr='#6d6d6d');
 			}
 			.login p{
-				font-size:31px;
+				font-size:15px;
 				text-align:center;
 				font-family:Verdana, Tahoma, Geneva, sans-serif;
 				text-decoration:none;
+				position: relative;
+				top: -6px;
+
 			}
 			.reg{
 				width:200px;
@@ -329,17 +379,32 @@ ul#navi .login a      {
 				font-family:Verdana, Tahoma, Geneva, sans-serif;
 				text-decoration:none;
 			}
+			.toolbar{
+				width:100%
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(45,46,45,255)), color-stop(0.6098097, rgba(31,31,31,255)), color-stop(1, rgba(17,17,17,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2d2e2d', endColorstr='#1f1f1f'endColorstr='#111111');
+			}
 		/* selectors for filtering*/
 			.main .home{}
 		</style>
 	</head>
 	<?php Session::init(); ?>
 	<body>
+		<div class="toolbar">
 		<div id="banner">
 			GameStalker
+			<div class="login toolEle"><p>Login</p></div>
+		</div>
 		</div>
 			<div id="isoParent" style="padding:10px">
-			<div  class="contentBox login item main"><p>Login</p></div>
 			<div  class="contentBox logout item home" ><p>LogOut</p></div>
 			<div  class="contentBox reg item main"><p>Register</p></div>
 			<div  class="contentBox about item main home"><p>About</p></div>
