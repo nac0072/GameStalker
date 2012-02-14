@@ -161,7 +161,7 @@
         modal: true,
         resizable: false,
         buttons: {
-            "Login1": function() {
+            "Login": function() {
             	var obj = {};
             	obj.username = $('[name=username]').val();
             	obj.password = $('[name=password]').val();
