@@ -135,6 +135,26 @@
             $('a', $(this).parent()).stop().animate();
         });
     }
+    //Nick Added Register here 
+    $('#RegD').dialog({
+    	autoOpen: false,
+    	width: 450,
+    	modal: true,
+		buttons: {
+            "Login": function() {
+            $(this).dialog("close");   	
+            },
+            "Cancel": function() {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $('.reg').click(function() {
+        $('#RegD').dialog('open');
+        disableNavi();
+        return false;
+    });
+    //Nick Ended Register here 
     $('#loginD').dialog({
         autoOpen: false,
         width: 360,
@@ -445,6 +465,59 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2d2e2d', endC
 					</td>
 					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
+			</table>
+		</div>
+		<div id="RegD" >
+			<table>
+				<tr>
+					<td>Username: </td>
+					<td>
+					<input type="text" name="newusername" />
+					</td>
+					<td class="ximg" id="ux" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<tr>
+					<td>Password: </td>
+					<td>
+					<input type="text" name="confirmpassword1"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<tr>
+					<td>Confirm Password: </td>
+					<td>
+					<input type="text" name="confirmpassword2"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<tr>
+					<td>Email: </td>
+					<td>
+					<input type="text" name="Email"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<tr>
+					<td>PSN Username:  </td>
+					<td>
+					<input type="text" name="PSNUsername"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<tr>
+					<td>Xbox Live Gamertag: </td>
+					<td>
+					<input type="text" name="XboxName"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>
+				<!--<tr>
+					<td>Steam ID: </td>
+					<td>
+					<input type="text" name="SteamID"/>
+					</td>
+					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
+				</tr>-->
 			</table>
 		</div>
 		<!--<div style="color:white" id="contentBody" >
