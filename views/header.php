@@ -32,11 +32,16 @@
 			}
 			function addPlats(){
 				$('.login').hide();
-				
+				$.each($('.filter'),function(){
+					$(this).show();
+				});
 				$('.logout').click(function(){
 					$container.isotope({filter:'.main'},ranLay());
 					//AJAX to kill session
 					$('.login').show();
+					$.each($('.filter'),function(){
+					$(this).hide();
+				});
 				});
 				$container.isotope({filter:'.home'},ranLay());	
 			}
@@ -200,29 +205,28 @@ ul#navi .home a{
     
 }
 #xbox{
-	background-color: #008000;
     background-image: url(<?php echo URL ?>public/imgs/xbox.png);
-    background-size: 50px 50px;
+    background-size: 30px 30px;
     background-repeat:no-repeat;
     background-position:center; 
+    width:100%;
+    height:100%;
 }
 #psn{
-	background-color: #551A8B;
     background-image: url(<?php echo URL ?>public/imgs/psn.png);
-    background-size: 90px 50px;
+    background-size: 50px 30px;
     background-repeat:no-repeat;
     background-position:center; 
+     width:100%;
+    height:100%;
 }
 #steam{
-	background-color: #1F1F1F;
     background-image: url(<?php echo URL ?>public/imgs/Steam.png);
     background-repeat:no-repeat;
-    background-size: 70px 70px;
+    background-size: 50px 50px;
     background-position:center; 
-}
-ul#navi .login a      {
-    background-image: url(<?php echo URL ?>public/imgs/Login.png);
-    background-position:right; 
+     width:100%;
+    height:100%;
 }
 			body {
 				background-image: url('<?php echo URL ?>/public/imgs/black.jpg');
@@ -314,14 +318,14 @@ background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, 
 background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(69,70,69,255) 61%, rgba(14,14,14,255) 100%);
 background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(69,70,69,255) 61%, rgba(14,14,14,255) 100%);
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#454645'endColorstr='#0e0e0e');*/
-	padding:2px;
-				width:60px;
-				height:40px;
 				color:white;
 				font-size:15px;
 				float:right;
 			}
 			.toolEle{
+				padding:2px;
+				width:60px;
+				height:40px;
 				top:-10px;
 				position:relative;
 		border-left: 1px solid black;
@@ -340,7 +344,7 @@ background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,8
 /* for IE */
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#595959'endColorstr='#353535');
 			}
-			div.toolElem:active{
+			div.toolEle:active{
 				/* for W3C-compliant browsers */
 background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
 /* for Safari 5.03+ and Chrome 7+ */
@@ -399,6 +403,9 @@ filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endC
 				font-family:Verdana, Tahoma, Geneva, sans-serif;
 				text-decoration:none;
 			}
+			#logo {
+				/*float:left;*/
+			}
 			.toolbar{
 				width:100%
 				/* for W3C-compliant browsers */
@@ -413,42 +420,28 @@ background-image: -o-linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,2
 filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2d2e2d', endColorstr='#1f1f1f'endColorstr='#111111');
 			}
 		/* selectors for filtering*/
-			.main .home{}
+			.main .home .filter
 		</style>
 	</head>
 	<?php Session::init(); ?>
 	<body>
 		<div class="toolbar">
 		<div id="banner">
-			GameStalker
+			<span id="logo">GameStalker</span>
 			<div class="login toolEle"><p>Login</p></div>
+			<div class="filter toolEle" style="display:none;float:left"><div id="xbox"></div></div>
+			<div class="filter toolEle" style="display:none;float:left;left:-1px"><div id="psn"></div></div>
+			<div class="filter toolEle" style="display:none;float:left;left:-1px"><div id="steam"></div></div>
 		</div>
 		</div>
 			<div id="isoParent" style="padding:10px">
 			<div  class="contentBox logout item home" ><p>LogOut</p></div>
 			<div  class="contentBox reg item main"><p>Register</p></div>
 			<div  class="contentBox about item main home"><p>About</p></div>
-			<div id="xbox" style="width:100px;height:100px" class="item contentBox home"></div>
-			<div id="psn" style="width:100px;height:100px" class="item contentBox home"></div>
-			<div id="steam" style="width:100px;height:100px" class="item contentBox home"></div>
+			<div  class="xbox item contentBox home"></div>
+			<div  class="psn item contentBox home"></div>
+			<div  class="steam item contentBox home"></div>
 			</div>
-		<!--<ul id="navi">
-			<li class="home">
-				<a id="home"></a>
-			</li>
-			<li class="xbox">
-				<a id="xbox"></a>
-			</li>
-			<li class="psn">
-				<a id="psn"></a>
-			</li>
-			<li class="steam">
-				<a id="steam"></a>
-			</li>
-			<li class="login">
-				<a id="login" ></a>
-			</li>
-		</ul>-->
 		<div id="loginD" >
 			<table>
 				<tr>

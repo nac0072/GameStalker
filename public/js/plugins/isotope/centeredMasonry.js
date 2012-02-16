@@ -5,9 +5,10 @@
     var parentWidth = this.element.parent().width();
     if(parentWidth >= 1000){
     	parentWidth = 1000;
+    	
     }
-    console.log(parentWidth);
     $('#banner').width(parentWidth-100);
+    $('#logo').css("left",((parentWidth-100)/2)+"px");
                   // i.e. options.masonry && options.masonry.columnWidth
     var colW = this.options.masonry && this.options.masonry.columnWidth ||
                   // or use the size of the first item
