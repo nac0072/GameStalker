@@ -1,0 +1,90 @@
+#logo{
+				font-family: Technovia;
+				font-size:30px;
+				color:orange;
+				position:absolute;
+				left:50%;
+				margin-left:-105px;
+				top:15px;
+			}
+			.toolbar{
+				width:100%
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(45,46,45,255)), color-stop(0.6098097, rgba(31,31,31,255)), color-stop(1, rgba(17,17,17,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(45,46,45,255) 0%, rgba(31,31,31,255) 61%, rgba(17,17,17,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2d2e2d', endColorstr='#1f1f1f'endColorstr='#111111');
+			}
+#xbox{
+    background-image: url('../imgs/xbox.png');
+    background-size: 30px 30px;
+    background-repeat:no-repeat;
+    background-position:center; 
+    width:100%;
+    height:100%;
+}
+#psn{
+    background-image: url('../imgs/psn.png');
+    background-size: 50px 30px;
+    background-repeat:no-repeat;
+    background-position:center; 
+     width:100%;
+    height:100%;
+}
+#steam{
+    background-image: url('../imgs/Steam.png');
+    background-repeat:no-repeat;
+    background-size: 50px 50px;
+    background-position:center; 
+     width:100%;
+    height:100%;
+}
+#banner{
+				color: white;
+				font-size: 20px;
+				margin: 0 auto 10px;
+				padding: 10px;
+				top: 40px;
+				width:98%;
+				right:10px;
+				height:24px;
+			}
+			.toolEle{
+				padding:2px;
+				width:60px;
+				height:40px;
+				top:-10px;
+				position:relative;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+			}
+			div.toolEle:hover{
+				cursor:pointer;
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(125,126,125,255)), color-stop(0.6098097, rgba(89,89,89,255)), color-stop(1, rgba(53,53,53,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(89,89,89,255) 61%, rgba(53,53,53,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#595959'endColorstr='#353535');
+			}
+			div.toolEle:active{
+				/* for W3C-compliant browsers */
+background-image: linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for Safari 5.03+ and Chrome 7+ */
+background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, rgba(125,126,125,255)), color-stop(0.6098097, rgba(117,117,117,255)), color-stop(1, rgba(109,109,109,255)));
+/* for Firefox 3.6+ */
+background-image: -moz-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for Opera 11.1+ */
+background-image: -o-linear-gradient(top, rgba(125,126,125,255) 0%, rgba(117,117,117,255) 61%, rgba(109,109,109,255) 100%);
+/* for IE */
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#7d7e7d', endColorstr='#757575'endColorstr='#6d6d6d');
+			}

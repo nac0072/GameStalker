@@ -7,8 +7,6 @@
     	parentWidth = 1000;
     	
     }
-    $('#banner').width(parentWidth-100);
-    $('#logo').css("left",((parentWidth-100)/2)+"px");
                   // i.e. options.masonry && options.masonry.columnWidth
     var colW = this.options.masonry && this.options.masonry.columnWidth ||
                   // or use the size of the first item
