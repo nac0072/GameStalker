@@ -22,10 +22,16 @@
 							$.ajax({
 								type:'POST',
 								url:'proxyService/psn',
-								data: $.param(id),
 								dataType:'json',
 								success: function(data){
 									console.log(data);
+									$('#Pavatar').empty();
+									var img = "<img style=\"width:100%;height:100%\" id=\"theImg\" src=\""+data.AvatarMedium+"\" />";
+									$('#Pavatar').prepend(img);
+									$('#plat').parent().append(data.Trophies.Platinum);
+									$('#gold').parent().append(data.Trophies.Gold);
+									$('#silver').parent().append(data.Trophies.Silver);
+									$('#bronze').parent().append(data.Trophies.Bronze);
 								}
 							});
 						}
@@ -45,18 +51,11 @@
 			}
 			function addPlats(){
 				getPSN();
-				$('.login').hide();
+				$('#login').hide();
 				$.each($('.filter'),function(){
 					$(this).show();
 				});
-				$('.logout').click(function(){
-					$container.isotope({filter:'.main'},ranLay());
-					//AJAX to kill session
-					$('.login').show();
-					$.each($('.filter'),function(){
-					$(this).hide();
-				});
-				});
+				$('.logout').show();
 				$container.isotope({filter:'.home'},ranLay());	
 			}
 			
@@ -111,26 +110,26 @@
            }
 	growglow();
 	// Register validator under construction
-	/*
 	function Regvalidate(obj){
-		if(obj.username.length < 6){
-			return false;
-		}
-		else{
-			var user = {};
-			user.username = obj.username;
-			checkUsername(user);
-		}
+		
 		
 	}
-	function checkUsername(){
+	function checkUsername(user){
 		$.ajax({
 			type:'POST',
-			url:'login/checkUsername',
+			url:'login/username',
 			data:$.param(user),
-			dataType:'json',
+			dataType:'text',
 			success:function(data){
-				console.log(eval(data));
+				console.log(data);
+				if(data == 'false'){
+					$('#nux').hide();
+					return true;
+				}
+				else{
+					$('#nux').show();
+					return false;
+				}
 			}
 		});
 	}
@@ -142,17 +141,40 @@
 			datatype:'json',
 			success: function(data){
 				console.log(data);
+			
 			}
 		})
-	}*/
+	}
     //Nick Added Register here 
+    $('#nuser').change(function(){
+    	var user = $(this).val();
+    	if(user.length < 6)
+    		return false;
+    	var obj = {};
+    	 obj.username = $(this).val();
+    	checkUsername(obj);
+    });
+    //pass cpass
+    $('#pass').change(function(){
+    	if($(this).val().length < 6){
+    		$('#px')
+    	}
+    });
+    $('#cpass').change(function(){
+    	var pass = $('#pass').val();
+    	var cpass = $(this).val();
+    	if(pass != cpass){
+    		// put x on pass word
+    	}
+    });
     $('#RegD').dialog({
     	autoOpen: false,
     	width: 450,
     	modal: true,
 		buttons: {
             "Login": function() {
-            $(this).dialog("close");   	
+            $(this).dialog("close");
+              	
             },
             "Cancel": function() {
              $(this).dialog("close");
@@ -181,7 +203,7 @@
             }
         }       
     });
-    $('.login').click(function() {
+    $('#login').click(function() {
         $('#loginD').dialog('open');
         return false;
     });
@@ -190,10 +212,20 @@
     	$container.isotope({sortBy: 'random'});
     	 return false;
     });
+     $('#psn').click(function(){
+ 	console.log("HERE");
+ 	$container.isotope({filter:'.psn'});
+ });
+ $('.logout').click(function(){
+					$container.isotope({filter:'.main'},ranLay());
+					$('#login').show();
+					$(this).hide();
+					$.each($('.filter'),function(){
+					$(this).hide();
+				});
+	});
 });
-
 </script>
-		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>/public/css/navi.css"/>
 		<link rel="stylesheet" type="text/css" href="<?php echo URL ?>public/css/toolbar.css"/>
 		<style>
 		html,body {
@@ -205,8 +237,8 @@
 	src: url('public/fonts/technott.ttf');
 }
 			body {
-				background-image: url('<?php echo URL ?>/public/imgs/black.jpg');
-				background-repeat:repeat;
+				background-image: url('public/imgs/black.jpg');
+				 background-size: auto;
 				width: 99%;
 				height: 100%;
 			}
@@ -284,24 +316,42 @@
 				text-decoration:none;
 				
 			}
-			.logout{
-				width:200px;
-				height:100px;
-				background-color:#808080;
-				color:white;
-			}
-			.logout p{
-				font-size:31px;
-				text-align:center;
-				font-family:Verdana, Tahoma, Geneva, sans-serif;
-				text-decoration:none;
-			}
 		/* selectors for filtering*/
-			.main .home .filter
+			.main .home .filter .psn .logout
 			#grandad{
 				width:100%;
 				height:100%;
 				position:absolute;
+			}
+			#Pplayercard{
+				width:350px;
+				height:150px;
+			}
+			#Pavatar{
+			width: 100px;
+height: 100px;
+border: 2px solid black;
+margin: 22px 12px 22px 22px;
+border-radius: 10px;
+float: left;
+padding: 3px;
+			}
+			#trophies{
+				color:white;
+				font-size:15px;
+			width: 178px;
+border: solid;
+height: 105px;
+float: left;
+border-radius: 20px;
+padding: 5px;
+margin: 16px 0 10px 0;
+			}
+			.trophy{
+				width: 20px;
+				height: 20px;
+				margin: 1px;
+				margin-left: 4px;
 			}
 		</style>
 	</head>
@@ -310,19 +360,25 @@
 		<div class="toolbar">
 		<div id="banner">
 			<span id="logo" >GameStalker</span>
-			<div class="login toolEle"><p>Login</p></div>
+			<div id="login" class="login toolEle"><p>Login</p></div>
+			<div class="login toolEle logout" style="display:none"><p>LogOut</p></div>
 			<div class="filter toolEle" style="display:none;float:left"><div id="xbox"></div></div>
 			<div class="filter toolEle" style="display:none;float:left;left:-1px"><div id="psn"></div></div>
 			<div class="filter toolEle" style="display:none;float:left;left:-2px"><div id="steam"></div></div>
 		</div>
 		</div>
 			<div id="isoParent" style="padding:10px">
-			<div  class="contentBox logout item home" ><p>LogOut</p></div>
 			<div  class="contentBox reg item main"><p>Register</p></div>
 			<div  class="contentBox about item main home"><p>About</p></div>
-			<div  class="xbox item contentBox home"></div>
-			<div  class="psn item contentBox home"></div>
-			<div  class="steam item contentBox home"></div>
+			<div id='Pplayercard' class='psn item contentBox'>
+			<div id='Pavatar'></div>
+			<div id='trophies'>
+				<div><img id="palt" class="trophy" src="public/imgs/trophies/platinum.png"/></div>
+				<div><img id="gold" class="trophy" src="public/imgs/trophies/gold.png"/></div>
+				<div><img id="silver" class="trophy" src="public/imgs/trophies/silver.png"/></div>
+				<div><img id="bronze" class="trophy" src="public/imgs/trophies/bronze.png"/></div>
+			</div>
+		</div>
 			</div>
 		<div id="loginD" >
 			<table>
@@ -347,20 +403,22 @@
 				<tr>
 					<td>Username: </td>
 					<td>
-					<input type="text" name="newusername" />
+					<input id="nuser" type="text" name="nuser" />
 					</td>
+					<td class="ximg" id="nux" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Password: </td>
 					<td>
-					<input type="text" name="confirmpassword1"/>
+					<input id="pass" type="password" name="pass"/>
 					</td>
 				</tr>
 				<tr>
 					<td>Confirm Password: </td>
 					<td>
-					<input type="text" name="confirmpassword2"/>
+					<input type="password" id="cpass" name="cpass"/>
 					</td>
+					<td class="ximg" id="cx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Email: </td>
@@ -371,19 +429,21 @@
 				<tr>
 					<td>PSN Username:  </td>
 					<td>
-					<input type="text" name="PSNUsername"/>
+					<input type="text" name="Puser"/>
 					</td>
+					<td class="ximg" id="psnx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Xbox Live Gamertag: </td>
 					<td>
-					<input type="text" name="XboxName"/>
+					<input type="text" name="Xuser"/>
 					</td>
+					<td class="ximg" id="xboxx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<!--<tr>
 					<td>Steam ID: </td>
 					<td>
-					<input type="text" name="SteamID"/>
+					<input type="text" name="Suser"/>
 					</td>
 					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>-->

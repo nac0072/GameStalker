@@ -11,6 +11,7 @@ public function __construct()
 
 	public function psn()
 	{
+		
 		Session::init();
 		$sth = $this->db->prepare("SELECT Psnid FROM user WHERE 
 				UserId= :id");
