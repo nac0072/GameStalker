@@ -297,6 +297,8 @@
     	autoOpen: false,
     	width: 460,
     	modal: true,
+    	title: 'Register',
+    	resizable: false,
 		buttons: {
             "Register": function() {
             	var Obj = {};
@@ -323,12 +325,23 @@
         return false;
     });
     //REG VALIDATION
+     $('#AboutD').dialog({
+    	autoOpen: false,
+    	width: 500,
+    	modal: true,
+    	resizable: false
+    });
+    $('.about').click(function() {
+        $('#AboutD').dialog('open');
+        return false;
+    });
     //Nick Ended Register here 
     $('#loginD').dialog({
         autoOpen: false,
         width: 360,
         modal: true,
         resizable: false,
+        title: 'Login',
         buttons: {
             "Login": function() {
             	var obj = {};
@@ -595,6 +608,11 @@ margin: 16px 0 10px 0;
 					<td class="ximg" id="px" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>-->
 			</table>
+		</div>
+		<div id="AboutD" >
+				<p>GameStalker is an aggregated service that combines the statistics from Xbox Live, Playstation Network and Steam 
+				to allow the Gamer to compare their performance with friends across all platforms. </p>
+				<p>GameStalker will be updated with RSS Feeds and Platform News soon!</p>
 		</div>
 		</div>
 	</body>
