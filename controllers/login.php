@@ -19,6 +19,10 @@ class Login extends Controller {
 	{
 	$this->model->usernameCheck();
 	}
+	function logout()
+	{
+	$this->model->logout();
+	}
 	
 
 }

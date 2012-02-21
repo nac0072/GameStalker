@@ -10,6 +10,7 @@ class Session
 	
 	public static function set($key, $value)
 	{
+		//add encyption
 		$_SESSION[$key] = $value;
 	}
 	

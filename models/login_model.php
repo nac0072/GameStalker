@@ -44,9 +44,12 @@ public function usernameCheck(){
 			// login
 			Session::init();
 			Session::set('id', $data['UserId']);
-			Session::set('loggedIn', true);
 			echo $data['UserId'];
 		} 
+	}
+	public function logout(){
+		Session::init();
+		Session::destroy();
 	}
 	
 }

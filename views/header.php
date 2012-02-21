@@ -17,10 +17,8 @@
 		
 					$(function() {	
 						function getPSN(){
-							var id = {};
-							id.psnID = 'blackbird7180';
 							$.ajax({
-								type:'POST',
+								type:'GET',
 								url:'proxyService/psn',
 								dataType:'json',
 								success: function(data){
@@ -35,6 +33,16 @@
 								}
 							});
 						}
+						function getxbox(tag){
+		$.ajax({
+			type:'GET',
+			url:'proxyService/xbox',
+			dataType:'json',
+			success: function(data){
+				console.log(data);
+			}
+		});
+	}
 		var $container = $('#isoParent');
 						$container.isotope({
 							itemSelector : '.item',
@@ -59,14 +67,14 @@
 				$container.isotope({filter:'.home'},ranLay());	
 			}
 			
-			function validate(info){
+		function validate(info){
             $.ajax({
             type:'POST',
             url:'login/run',
             data: $.param(info),
             success: function(data){
             	console.log(data);
-            	if(data != ""){
+            	if(!isNaN(parseInt(data))){
             		$('#loginD').dialog("close");
             		$('#ux').hide();
             		$('#px').hide();
@@ -75,7 +83,11 @@
             	else{
             		$('#ux').show("explode",50);
             		$('#px').show("explode",50);
-            		$('#loginD').effect("shake", {times : 3}, 100);
+            		//disable button on animation becasue of trolls
+            		$(":button:contains('Login')").attr("disabled","disabled");
+            		$('#loginD').stop().effect("shake", {times : 3}, 100,function(){
+            			$(":button:contains('Login')").removeAttr("disabled","disabled");
+            		});
             	}
             }
             });
@@ -109,82 +121,208 @@
            	});
            }
 	growglow();
+	
 	// Register validator under construction
-	function Regvalidate(obj){
-		
-		
+	function Regvalidate(Obj){
+		//disable reg button
+		$(":button:contains('Register')").attr("disabled","disabled").addClass("ui-state-disabled");
+		checkUsername(Obj, true);
+		// re enables the Register Button
+       $(":button:contains('Register')").removeAttr("disabled").removeClass("ui-state-disabled");
 	}
-	function checkUsername(user){
+	function prgBar(){
+		if(!$('#pg').length){
+		$('.ui-dialog-buttonpane').prepend("<div id=\"pgBar\"style=\"width:270px;float:left;top: 4px;position: relative;\"></div>");
+		$('#pgBar').progressbar({
+			value:0
+		});
+		}
+	}
+	function checkUsername(user, validate){
+		var obj ={};
+		obj.username = user.username;
+		if(user.username.length < 6){
+			$('#nux').show();
+			return false;
+		}
 		$.ajax({
 			type:'POST',
 			url:'login/username',
-			data:$.param(user),
+			data:$.param(obj),
 			dataType:'text',
 			success:function(data){
 				console.log(data);
 				if(data == 'false'){
 					$('#nux').hide();
-					return true;
 				}
 				else{
 					$('#nux').show();
 					return false;
 				}
+				if(validate){
+					console.log('validating .. ');
+					if(checkPass()){
+						console.log('password good');
+						if(checkEmail()){
+							console.log('email good');
+							var psn = user.psn!=""?true:false;
+							var xbox = user.xbox!=""?true:false;
+							if(!psn && !xbox){
+								$('#psnx').show();
+								$('#xboxx').show();
+								return false;
+							}
+							if(psn){
+								console.log('checking psn');
+							checkPsnTag(user, xbox);
+							}
+							else{
+								checkXboxTag(user.xbox);
+							}
+						}
+						else{
+							return false;
+						}
+					}
+					else{
+						return false;
+					}
+				}
 			}
 		});
 	}
-	function checkPsnTag(tag){
+	function resetOnClose(){
+		$('#pgBar').remove();
+	}
+	function checkPsnTag(tag, xbox){
+		var obj = {};
+		obj.tag = tag.psn;
 		$.ajax({
 			type:'POST',
 			url:'proxyService/psn',
-			data:$.param(tag),
-			datatype:'json',
+			data:$.param(obj),
+			dataType:'json',
+			success: function(data){
+				if(data == 'exists'){
+					$('#psnx').show();
+					return false;
+				}
+				if($.isEmptyObject(data)){
+					$('#psnx').show();
+					return false;
+				}
+				else{
+					$('#psnx').hide();
+					if(xbox){
+						console.log('checking xbox');
+						checkXboxTag(tag.xbox);
+					}
+					else{
+						//add user
+					}
+				}
+			}
+		});
+	}
+	function checkXboxTag(tag){
+		var obj = {};
+		obj.tag = tag;
+		$.ajax({
+			type:'POST',
+			url:'proxyService/xbox',
+			data: $.param(obj),
+			dataType:'json',
 			success: function(data){
 				console.log(data);
-			
+				if(data == 'exists'){
+					$('#xboxx').show();
+					return false;
+				}
+				if($.isEmptyObject(data)){
+					$('#xboxx').show();
+					return false;
+				}
+				else{
+					$('#xboxx').hide();
+					//adduser
+				}
 			}
-		})
+		});
 	}
+	function checkEmail(){
+		var email = $('#email').val();
+		if(email.indexOf('@', 1) != -1){
+			$('#ex').hide();
+			return true;
+		}
+		else{
+			$('#ex').show();
+			return false;
+		}
+	}
+	function checkPass(){
+		if($('#pass').val().length < 6){
+			$('#npx').show();
+			return false;
+		}
+		else{
+			$('#npx').hide();
+		}
+		if($('#pass').val() != $('#cpass').val() ){
+			$('#cx').show();
+			return false;
+		}
+		else{
+			$('#cx').hide();
+			return true;
+		}
+		}
+		$('#pass').change(function(){
+    	checkPass();
+    });
+    $('#cpass').change(function(){
+    	checkPass();
+    });
+    $('#email').change(function(){
+    	checkEmail()
+    });
     //Nick Added Register here 
     $('#nuser').change(function(){
-    	var user = $(this).val();
-    	if(user.length < 6)
-    		return false;
     	var obj = {};
     	 obj.username = $(this).val();
     	checkUsername(obj);
     });
     //pass cpass
-    $('#pass').change(function(){
-    	if($(this).val().length < 6){
-    		$('#px')
-    	}
-    });
-    $('#cpass').change(function(){
-    	var pass = $('#pass').val();
-    	var cpass = $(this).val();
-    	if(pass != cpass){
-    		// put x on pass word
-    	}
-    });
     $('#RegD').dialog({
     	autoOpen: false,
-    	width: 450,
+    	width: 460,
     	modal: true,
 		buttons: {
-            "Login": function() {
-            $(this).dialog("close");
-              	
+            "Register": function() {
+            	var Obj = {};
+            	Obj.username = $('#nuser').val();
+            	Obj.password = $('#cpass').val();
+            	Obj.email = $('#email').val();
+            	Obj.psn = $('#Puser').val();
+            	Obj.xbox = $('#Xuser').val();
+            	Regvalidate(Obj);
             },
             "Cancel": function() {
              $(this).dialog("close");
             }
-        }
+       },
+       open:function(){
+       	prgBar();
+       },
+       close:function(){
+       	resetOnClose();
+       }
     });
     $('.reg').click(function() {
         $('#RegD').dialog('open');
         return false;
     });
+    //REG VALIDATION
     //Nick Ended Register here 
     $('#loginD').dialog({
         autoOpen: false,
@@ -216,7 +354,14 @@
  	console.log("HERE");
  	$container.isotope({filter:'.psn'});
  });
+ function logoutAjax(){
+ 	$.ajax({
+ 		type:'GET',
+ 		url: 'login/logout',
+ 	});
+ }
  $('.logout').click(function(){
+ 					logoutAjax();
 					$container.isotope({filter:'.main'},ranLay());
 					$('#login').show();
 					$(this).hide();
@@ -412,6 +557,7 @@ margin: 16px 0 10px 0;
 					<td>
 					<input id="pass" type="password" name="pass"/>
 					</td>
+					<td class="ximg" id="npx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Confirm Password: </td>
@@ -423,20 +569,21 @@ margin: 16px 0 10px 0;
 				<tr>
 					<td>Email: </td>
 					<td>
-					<input type="text" name="Email"/>
+					<input id="email" type="text" name="Email"/>
 					</td>
+					<td class="ximg" id="ex" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>PSN Username:  </td>
 					<td>
-					<input type="text" name="Puser"/>
+					<input id="Puser"type="text" name="Puser"/>
 					</td>
 					<td class="ximg" id="psnx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>
 				<tr>
 					<td>Xbox Live Gamertag: </td>
 					<td>
-					<input type="text" name="Xuser"/>
+					<input id="Xuser" type="text" name="Xuser"/>
 					</td>
 					<td class="ximg" id="xboxx" style="display:none"><img src="public/imgs/x.png" /></td>
 				</tr>

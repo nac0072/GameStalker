@@ -10,6 +10,10 @@ class proxyService extends Controller {
 	{
 		$this->model->psn();
 	}
+	function xbox()
+	{
+		$this->model->xbox();
+	}
 	
 
 }
